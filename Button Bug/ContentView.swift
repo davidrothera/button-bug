@@ -8,9 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isShowingDetails = false
+
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            ScrollView {
+                VStack {
+                    Text("Hello, world!")
+                        .padding()
+                        .navigationTitle("Test")
+                }
+            }
+            .toolbar {
+                Button {
+                    isShowingDetails.toggle()
+                } label: {
+                    Label("Date", systemImage: "calendar")
+                }
+                .popover(isPresented: $isShowingDetails) {
+                    DetailView()
+                }
+            }
+        }
+    }
+}
+
+struct DetailView: View {
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        Button("Touch Me!") {
+            dismiss()
+        }
     }
 }
 
